@@ -1,43 +1,73 @@
 // This file is a fallback for using MaterialIcons on Android and web.
 
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { SymbolWeight } from 'expo-symbols';
-import React from 'react';
-import { OpaqueColorValue, StyleProp, ViewStyle } from 'react-native';
+import React from "react";
+import { TextStyle } from "react-native";
+import { SymbolWeight } from "expo-symbols";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { OpaqueColorValue, StyleProp, ViewStyle } from "react-native";
 
-// Add your SFSymbol to MaterialIcons mappings here.
 const MAPPING = {
-  // See MaterialIcons here: https://icons.expo.fyi
-  // See SF Symbols in the SF Symbols app on Mac.
-  'house.fill': 'home',
-  'paperplane.fill': 'send',
-  'chevron.left.forwardslash.chevron.right': 'code',
-  'chevron.right': 'chevron-right',
+  // See here: https://icons.expo.fyi
+  "paperplane.outline": { name: "send-outline", lib: "Ionicons" },
+  "house.outline": { name: "home-outline", lib: "Ionicons" },
+  "house.fill": { name: "home", lib: "MaterialIcons" },
+  "paperplane.fill": { name: "send", lib: "MaterialIcons" },
+  "chevron.right": { name: "chevron-right", lib: "MaterialIcons" },
+  "chevron.left.forwardslash.chevron.right": {
+    name: "code",
+    lib: "MaterialIcons",
+  },
 } as Partial<
   Record<
-    import('expo-symbols').SymbolViewProps['name'],
-    React.ComponentProps<typeof MaterialIcons>['name']
+    import("expo-symbols").SymbolViewProps["name"],
+    {
+      name: React.ComponentProps<
+        typeof Ionicons | typeof MaterialIcons
+      >["name"];
+      lib: "MaterialIcons" | "Ionicons";
+    }
   >
 >;
 
 export type IconSymbolName = keyof typeof MAPPING;
 
-/**
- * An icon component that uses native SFSymbols on iOS, and MaterialIcons on Android and web. This ensures a consistent look across platforms, and optimal resource usage.
- *
- * Icon `name`s are based on SFSymbols and require manual mapping to MaterialIcons.
- */
 export function IconSymbol({
   name,
   size = 24,
   color,
   style,
 }: {
-  name: IconSymbolName;
   size?: number;
-  color: string | OpaqueColorValue;
-  style?: StyleProp<ViewStyle>;
+  name: IconSymbolName;
   weight?: SymbolWeight;
+  style?: StyleProp<ViewStyle>;
+  color: string | OpaqueColorValue;
 }) {
-  return <MaterialIcons color={color} size={size} name={MAPPING[name]} style={style} />;
+  const mapping = MAPPING[name];
+
+  const lib = mapping!.lib;
+  const iconName = mapping!.name;
+
+  if (lib === "Ionicons")
+    return (
+      <Ionicons
+        color={color}
+        size={size}
+        name={iconName as any}
+        style={style as TextStyle}
+      />
+    );
+
+  if (lib === "MaterialIcons")
+    return (
+      <MaterialIcons
+        color={color}
+        size={size}
+        name={iconName as any}
+        style={style as TextStyle}
+      />
+    );
+
+  return null;
 }
