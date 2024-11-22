@@ -30,6 +30,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Home",
+          headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <IconSymbol
               size={28}
@@ -43,6 +44,7 @@ export default function TabLayout() {
         name="explore"
         options={{
           title: "Explore",
+          headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <IconSymbol
               size={28}

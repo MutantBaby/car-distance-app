@@ -1,4 +1,4 @@
-// This file is a fallback for using MaterialIcons on Android and web.
+// This file is a fallback for using MaterialIcons & Ionicons on Android and web.
 
 import React from "react";
 import { TextStyle } from "react-native";
