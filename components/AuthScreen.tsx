@@ -1,8 +1,5 @@
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 
-import { ThemedText } from "./ThemedText";
-import { ThemedView } from "./ThemedView";
-
 const AuthScreen = ({
   email,
   isLogin,
@@ -30,23 +27,21 @@ const AuthScreen = ({
         placeholder="Password"
         secureTextEntry
       />
-      <ThemedView style={styles.buttonContainer}>
+      <View style={styles.buttonContainer}>
         <Button
           title={isLogin ? "Sign In" : "Sign Up"}
           onPress={handleAuthentication}
           color="#3498db"
         />
-      </ThemedView>
+      </View>
 
-      <ThemedView style={styles.bottomContainer}>
-        <ThemedText
-          style={styles.toggleText}
-          onPress={() => setIsLogin(!isLogin)}>
+      <View style={styles.bottomContainer}>
+        <Text style={styles.toggleText} onPress={() => setIsLogin(!isLogin)}>
           {isLogin
             ? "Need an account? Sign Up"
             : "Already have an account? Sign In"}
-        </ThemedText>
-      </ThemedView>
+        </Text>
+      </View>
     </View>
   );
 };
